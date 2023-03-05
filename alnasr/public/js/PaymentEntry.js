@@ -23,13 +23,13 @@ frappe.ui.form.on('Payment Entry', {
 			var button = frm.add_custom_button(('Create cost allocation'), function(buttonDimmed){
 				
 				let DocName = $("#navbar-breadcrumbs")[0].children[2].innerText;
-				console.log(DocName);
+				// console.log(DocName);
 				
 					return frappe.call({
 						method: "alnasr.Queries.create_JornalEntry_from_PaymentEntry",
 						args: {
 							docname : DocName,
-                            party: frm.doc.party
+                            party_name: frm.doc.party_name
 						}
 						});
 

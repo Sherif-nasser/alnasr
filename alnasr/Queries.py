@@ -37,7 +37,7 @@ def get_the_items_from_feesDoc(docname):
 
 
 @frappe.whitelist()
-def create_JornalEntry_from_PaymentEntry(docname, party=None):
+def create_JornalEntry_from_PaymentEntry(docname, party_name=None):
 
     jornalDoc = frappe.new_doc("Journal Entry")
 
@@ -52,14 +52,14 @@ def create_JornalEntry_from_PaymentEntry(docname, party=None):
 
     jornalDoc.set("posting_date", datetime.date.today())
 
-    if party != None:
+    if party_name != None:
         jornalDoc.append(
             "accounts",
             {  ##set the calues account and debit at first place from payment entry
                 "account": itemsFromFees.income_account,
                 "debit_in_account_currency": itemsFromPE.paid_amount,
                 'party_type': 'Student',
-                'party' : party,
+                'party_name' : party_name,
             },
         )
     else:
@@ -104,7 +104,7 @@ def create_JornalEntry_from_PaymentEntry(docname, party=None):
                             "debit_in_account_currency": 0,
                             "credit_in_account_currency": component.balance,
                             'party_type': 'Student',
-                            'party' : party,
+                            'party_name' : party_name,
                         },
                     )
                     # component.balance = updatedBalance
@@ -135,7 +135,7 @@ def create_JornalEntry_from_PaymentEntry(docname, party=None):
                             "debit_in_account_currency": 0,
                             "credit_in_account_currency": component.balance,
                             'party_type': 'Student',
-                            'party' : party,
+                            'party_name' : party_name,
                         },
                     )
                     stopWhenNegative = False
@@ -180,7 +180,7 @@ def create_JornalEntry_from_PaymentEntry(docname, party=None):
                             "debit_in_account_currency": 0,
                             "credit_in_account_currency": itemsFromPE.paid_amount,
                             'party_type': 'Student',
-                            'party' : party,
+                            'party_name' : party_name,
                         },
                     )
 
